@@ -7,21 +7,154 @@
 //
 
 #import "ViewController.h"
+#import "MazeNode.h"
+
 
 @interface ViewController ()
 
+@property (nonatomic, strong) NSArray *maze;
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+#pragma mark - lazy 
+
+- (NSArray *)maze
+{
+    if (!_maze) {
+        _maze = @[@[@0,@0,@0,@0,@0,@0,@0,@0],
+                  @[@0,@2,@1,@0,@0,@1,@0,@0],
+                  @[@0,@1,@1,@0,@0,@0,@1,@0],
+                  @[@0,@1,@0,@0,@0,@0,@0,@0],
+                  @[@0,@1,@1,@1,@0,@0,@1,@3],
+                  @[@0,@0,@0,@1,@0,@0,@1,@0],
+                  @[@0,@0,@0,@1,@1,@1,@1,@0],
+                  @[@0,@0,@0,@0,@0,@0,@0,@0]];
+    }
+    return _maze;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    MazeNode *start = [[MazeNode alloc]init];
+    start.position.xValue = 1;
+    start.position.yValue = 1;
+    start.currentStep = 0;
+    start.direction = 1;
+    
+    
+    NSMutableArray *stack = [NSMutableArray array];
+    
+    NSLog(@"start position is x:%ld y:%ld",(long)start.position.xValue,(long)start.position.yValue);
+    NSLog(@"start value is : %@",self.maze[start.position.xValue][start.position.yValue]);
+
+    [stack addObject:start];
+    
+//    NSLog(@"start position is x:%ld y:%ld",(long)start.xValue, (long)start.yValue);
+    
+    NSMutableArray *result = [self findMazeExit:stack];
+
 }
+
+- (NSMutableArray *)findMazeExit :(NSMutableArray *)stack
+{
+    NSMutableArray *invalidPosition = [NSMutableArray array];
+
+    do {
+        
+        MazeNode *mazeNode = stack.lastObject;
+        
+        if ([self accessAble:mazeNode]) {
+            
+            MazeNode *nextStep = [[MazeNode alloc]init];
+            
+            nextStep.position = mazeNode.position;
+            nextStep.currentStep = mazeNode.currentStep+=1;
+            
+            nextStep = [self swithPosition:nextStep];
+        
+            NSLog(@"next step position is :x:%ld y:%ld", (long)nextStep.position.yValue,(long)nextStep.position.xValue);
+            NSLog(@"next step count is: %ld",nextStep.currentStep);
+            NSLog(@"next step node value is %@",[self nodeValue:nextStep]);
+            NSLog(@"stack values is %@",stack);
+
+            [stack addObject:nextStep];
+            
+        } else {
+            
+            [invalidPosition addObject:mazeNode.position];
+            
+            
+            mazeNode = stack.lastObject;
+            
+            if (mazeNode.direction < 4) {
+                
+                MazeNode *nextStep = [[MazeNode alloc]init];
+                mazeNode.direction +=1;
+                nextStep.direction = mazeNode.direction;
+                nextStep.position = mazeNode.position;
+                nextStep = [self swithPosition:nextStep];
+                [stack addObject:nextStep];
+            }
+            
+            if (mazeNode.direction == 4 && stack.count>0) {
+                
+                [invalidPosition addObject:mazeNode.position];
+                [stack removeLastObject];
+            }
+        }
+        
+    } while ([self isExit:stack.lastObject]);
+
+    
+    return stack;
+}
+
+- (BOOL)isExit: (MazeNode *)node
+{
+    return [[self nodeValue:node] integerValue] != 3;
+}
+
+- (MazeNode *)swithPosition :(MazeNode *)node
+{
+    
+    switch (node.direction) {
+            
+        case 1: node.position.xValue += 1;
+            break;
+            
+        case 2: node.position.yValue += 1;
+            break;
+            
+        case 3: node.position.xValue -= 1;
+            break;
+            
+        case 4: node.position.yValue -= 1;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return node;
+}
+
+- (BOOL)accessAble :(MazeNode *)node
+{
+    
+    if ([[self nodeValue:node] integerValue] == 0) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (NSNumber *)nodeValue :(MazeNode *)node
+{
+    return _maze[node.position.xValue][node.position.yValue];
+}
+
 
 @end

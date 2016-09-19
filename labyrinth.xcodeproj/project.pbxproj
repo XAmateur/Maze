@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3023FFD31D81A8B80091C1FC /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = 3023FFD21D81A8B80091C1FC /* Position.m */; };
+		3023FFD61D81A8D60091C1FC /* MazeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3023FFD51D81A8D60091C1FC /* MazeNode.m */; };
 		30250DAC1D80357B00E15B8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 30250DAB1D80357B00E15B8F /* main.m */; };
 		30250DAF1D80357B00E15B8F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30250DAE1D80357B00E15B8F /* AppDelegate.m */; };
 		30250DB21D80357B00E15B8F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30250DB11D80357B00E15B8F /* ViewController.m */; };
@@ -35,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3023FFD11D81A8B80091C1FC /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
+		3023FFD21D81A8B80091C1FC /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
+		3023FFD41D81A8D60091C1FC /* MazeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeNode.h; sourceTree = "<group>"; };
+		3023FFD51D81A8D60091C1FC /* MazeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeNode.m; sourceTree = "<group>"; };
 		30250DA71D80357B00E15B8F /* labyrinth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = labyrinth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30250DAB1D80357B00E15B8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		30250DAD1D80357B00E15B8F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,6 +111,10 @@
 				30250DAE1D80357B00E15B8F /* AppDelegate.m */,
 				30250DB01D80357B00E15B8F /* ViewController.h */,
 				30250DB11D80357B00E15B8F /* ViewController.m */,
+				3023FFD11D81A8B80091C1FC /* Position.h */,
+				3023FFD21D81A8B80091C1FC /* Position.m */,
+				3023FFD41D81A8D60091C1FC /* MazeNode.h */,
+				3023FFD51D81A8D60091C1FC /* MazeNode.m */,
 				30250DB31D80357B00E15B8F /* Main.storyboard */,
 				30250DB61D80357B00E15B8F /* Assets.xcassets */,
 				30250DB81D80357B00E15B8F /* LaunchScreen.storyboard */,
@@ -272,7 +282,9 @@
 			files = (
 				30250DB21D80357B00E15B8F /* ViewController.m in Sources */,
 				30250DAF1D80357B00E15B8F /* AppDelegate.m in Sources */,
+				3023FFD31D81A8B80091C1FC /* Position.m in Sources */,
 				30250DAC1D80357B00E15B8F /* main.m in Sources */,
+				3023FFD61D81A8D60091C1FC /* MazeNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +510,7 @@
 				30250DD61D80357B00E15B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		30250DD71D80357B00E15B8F /* Build configuration list for PBXNativeTarget "labyrinthTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +519,7 @@
 				30250DD91D80357B00E15B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		30250DDA1D80357B00E15B8F /* Build configuration list for PBXNativeTarget "labyrinthUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +528,7 @@
 				30250DDC1D80357B00E15B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
