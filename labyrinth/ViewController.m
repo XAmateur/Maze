@@ -61,7 +61,7 @@
 - (NSMutableArray *)findMazeExit :(NSMutableArray *)stack
 {
     NSMutableArray *invalidPosition = [NSMutableArray array];
-
+    
     do {
         
         MazeNode *mazeNode = stack.lastObject;
@@ -84,7 +84,6 @@
             [stack addObject:nextStep];
 
             NSLog(@"stack values is %@",stack);
-
 
         } else {
             
@@ -116,9 +115,18 @@
             nextStep.direction = mazeNode.direction;
             nextStep.position.xValue = mazeNode.position.xValue;
             nextStep.position.yValue = mazeNode.position.yValue;
-
-            
             nextStep = [self swithPosition:nextStep];
+            
+            if ([self isStackContainCurrentStep:nextStep stack:stack]) {
+                
+                NSInteger direction = 5 - mazeNode.direction;
+                nextStep.direction = direction;
+                nextStep.position.xValue = mazeNode.position.xValue;
+                nextStep.position.yValue = mazeNode.position.yValue;
+                nextStep = [self swithPosition:nextStep];
+            }
+            
+            
             NSLog(@"the next step xValue is :%ld, yValue is :%ld",(long)nextStep.position.xValue,(long)nextStep.position.yValue);
             NSLog(@"the next direction is %ld",(long)nextStep.direction);
             
@@ -173,8 +181,19 @@
 
 - (NSNumber *)nodeValue :(MazeNode *)node
 {
+    NSLog(@"node value is :%@",_maze[node.position.xValue][node.position.yValue]);
     return _maze[node.position.xValue][node.position.yValue];
 }
 
-
+- (BOOL)isStackContainCurrentStep:(MazeNode *)nextStep stack:(NSArray *)stack
+{
+    for (MazeNode *node in stack)
+    {
+        if (node.position.xValue == nextStep.position.xValue && node.position.yValue == nextStep.position.yValue) {
+            
+            return YES;
+        }
+    }
+    return NO;
+}
 @end
