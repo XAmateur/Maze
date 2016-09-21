@@ -15,5 +15,5 @@
 @property (nonatomic, strong) Position *position;
 @property (nonatomic, assign) NSInteger currentStep;
 @property (nonatomic, assign) NSInteger direction;
-
+@property (nonatomic, assign) NSInteger changeDirectionCount;
 @end

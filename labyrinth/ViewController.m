@@ -70,40 +70,60 @@
             
             MazeNode *nextStep = [[MazeNode alloc]init];
             
-            nextStep.position = mazeNode.position;
+            nextStep.position.xValue = mazeNode.position.xValue;
+            nextStep.position.yValue = mazeNode.position.yValue;
+
             nextStep.currentStep = mazeNode.currentStep+=1;
             
             nextStep = [self swithPosition:nextStep];
         
-            NSLog(@"next step position is :x:%ld y:%ld", (long)nextStep.position.yValue,(long)nextStep.position.xValue);
+            NSLog(@"next step position is :x:%ld y:%ld", (long)nextStep.position.xValue,(long)nextStep.position.yValue);
             NSLog(@"next step count is: %ld",nextStep.currentStep);
             NSLog(@"next step node value is %@",[self nodeValue:nextStep]);
-            NSLog(@"stack values is %@",stack);
 
             [stack addObject:nextStep];
-            
+
+            NSLog(@"stack values is %@",stack);
+
+
         } else {
             
             [invalidPosition addObject:mazeNode.position];
-            
+            [stack removeLastObject];
             
             mazeNode = stack.lastObject;
             
-            if (mazeNode.direction < 4) {
-                
-                MazeNode *nextStep = [[MazeNode alloc]init];
-                mazeNode.direction +=1;
-                nextStep.direction = mazeNode.direction;
-                nextStep.position = mazeNode.position;
-                nextStep = [self swithPosition:nextStep];
-                [stack addObject:nextStep];
+            for (MazeNode *node in stack) {
+                NSLog(@"the node xValue is :%ld, yValue is :%ld",(long)node.position.xValue,(long)node.position.yValue);
             }
             
-            if (mazeNode.direction == 4 && stack.count>0) {
+            if (mazeNode.changeDirectionCount == 4 && stack.count>0) {
                 
                 [invalidPosition addObject:mazeNode.position];
                 [stack removeLastObject];
+                
             }
+            
+            mazeNode.changeDirectionCount += 1;
+            
+            if (mazeNode.direction == 4) {
+                
+                mazeNode.direction = 0;
+            }
+            
+            MazeNode *nextStep = [[MazeNode alloc]init];
+            mazeNode.direction += 1;
+            nextStep.direction = mazeNode.direction;
+            nextStep.position.xValue = mazeNode.position.xValue;
+            nextStep.position.yValue = mazeNode.position.yValue;
+
+            
+            nextStep = [self swithPosition:nextStep];
+            NSLog(@"the next step xValue is :%ld, yValue is :%ld",(long)nextStep.position.xValue,(long)nextStep.position.yValue);
+            NSLog(@"the next direction is %ld",(long)nextStep.direction);
+            
+            [stack addObject:nextStep];
+            
         }
         
     } while ([self isExit:stack.lastObject]);
