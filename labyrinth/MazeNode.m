@@ -16,6 +16,7 @@
     if (self = [super init]) {
         _position = [[Position alloc]init];
         _direction = 1;
+        _changeDirectionCount = 1;
     }
     return self;
 }
