@@ -12,7 +12,10 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *startBtn;
 @property (nonatomic, strong) NSArray *maze;
+@property (weak, nonatomic) IBOutlet UIView *btnContainer;
+
 @end
 
 @implementation ViewController
@@ -52,15 +55,12 @@
 
     [stack addObject:start];
     
-//    NSLog(@"start position is x:%ld y:%ld",(long)start.xValue, (long)start.yValue);
-    
     NSMutableArray *result = [self findMazeExit:stack];
 
 }
 
 - (NSMutableArray *)findMazeExit :(NSMutableArray *)stack
 {
-    NSMutableArray *invalidPosition = [NSMutableArray array];
     
     do {
         
@@ -87,7 +87,6 @@
 
         } else {
             
-            [invalidPosition addObject:mazeNode.position];
             [stack removeLastObject];
             
             mazeNode = stack.lastObject;
@@ -96,9 +95,8 @@
                 NSLog(@"the node xValue is :%ld, yValue is :%ld",(long)node.position.xValue,(long)node.position.yValue);
             }
             
-            if (mazeNode.changeDirectionCount == 4 && stack.count>0) {
+            if (mazeNode.changeDirectionCount > 4 && stack.count>0) {
                 
-                [invalidPosition addObject:mazeNode.position];
                 [stack removeLastObject];
                 
             }
