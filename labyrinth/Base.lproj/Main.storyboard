@@ -31,9 +31,12 @@
                                     <constraint firstAttribute="height" constant="48" id="vH2-pf-bVU"/>
                                 </constraints>
                                 <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="start:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Sl-q0-cfy"/>
+                                </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="r9u-xl-QxR" secondAttribute="trailing" constant="117" id="Oab-wm-viH"/>
                             <constraint firstAttribute="trailing" secondItem="1R0-wE-nxQ" secondAttribute="trailing" id="ce1-MX-4E3"/>

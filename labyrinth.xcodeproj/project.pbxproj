@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		242186851D94D163005C7A41 /* NSArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 242186841D94D163005C7A41 /* NSArray+Safe.m */; };
+		242186881D94D4EE005C7A41 /* MazeNodeKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 242186871D94D4EE005C7A41 /* MazeNodeKit.m */; };
 		3023FFD31D81A8B80091C1FC /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = 3023FFD21D81A8B80091C1FC /* Position.m */; };
 		3023FFD61D81A8D60091C1FC /* MazeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3023FFD51D81A8D60091C1FC /* MazeNode.m */; };
 		30250DAC1D80357B00E15B8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 30250DAB1D80357B00E15B8F /* main.m */; };
@@ -37,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		242186831D94D163005C7A41 /* NSArray+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Safe.h"; sourceTree = "<group>"; };
+		242186841D94D163005C7A41 /* NSArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Safe.m"; sourceTree = "<group>"; };
+		242186861D94D4EE005C7A41 /* MazeNodeKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeNodeKit.h; sourceTree = "<group>"; };
+		242186871D94D4EE005C7A41 /* MazeNodeKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeNodeKit.m; sourceTree = "<group>"; };
 		3023FFD11D81A8B80091C1FC /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
 		3023FFD21D81A8B80091C1FC /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
 		3023FFD41D81A8D60091C1FC /* MazeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeNode.h; sourceTree = "<group>"; };
@@ -111,8 +117,12 @@
 				30250DAE1D80357B00E15B8F /* AppDelegate.m */,
 				30250DB01D80357B00E15B8F /* ViewController.h */,
 				30250DB11D80357B00E15B8F /* ViewController.m */,
+				242186831D94D163005C7A41 /* NSArray+Safe.h */,
+				242186841D94D163005C7A41 /* NSArray+Safe.m */,
 				3023FFD11D81A8B80091C1FC /* Position.h */,
 				3023FFD21D81A8B80091C1FC /* Position.m */,
+				242186861D94D4EE005C7A41 /* MazeNodeKit.h */,
+				242186871D94D4EE005C7A41 /* MazeNodeKit.m */,
 				3023FFD41D81A8D60091C1FC /* MazeNode.h */,
 				3023FFD51D81A8D60091C1FC /* MazeNode.m */,
 				30250DB31D80357B00E15B8F /* Main.storyboard */,
@@ -283,8 +293,10 @@
 				30250DB21D80357B00E15B8F /* ViewController.m in Sources */,
 				30250DAF1D80357B00E15B8F /* AppDelegate.m in Sources */,
 				3023FFD31D81A8B80091C1FC /* Position.m in Sources */,
+				242186881D94D4EE005C7A41 /* MazeNodeKit.m in Sources */,
 				30250DAC1D80357B00E15B8F /* main.m in Sources */,
 				3023FFD61D81A8D60091C1FC /* MazeNode.m in Sources */,
+				242186851D94D163005C7A41 /* NSArray+Safe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

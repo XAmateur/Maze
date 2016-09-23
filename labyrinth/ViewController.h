@@ -7,6 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MazeNodeKit.h"
+
+@interface ViewControllerViewModel : NSObject
+
+@property (nonatomic, strong) NSArray <MazeNodeKit *> *dataArray;
+@property (nonatomic, strong) NSArray *maze;
+
+- (NSArray *)findMazeExit :(NSMutableArray *)stack;
+
+@end
 
 @interface ViewController : UIViewController
 
