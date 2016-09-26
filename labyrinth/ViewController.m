@@ -11,6 +11,7 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *clearBtn;
 @property (weak, nonatomic) IBOutlet UIButton *startBtn;
 @property (weak, nonatomic) IBOutlet UIView *btnContainer;
 @property (nonatomic, strong) NSArray *maze;
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) NSArray *situations;
 
 @property (nonatomic, strong) ViewControllerViewModel *viewModel;
+@property (nonatomic, assign) NSInteger count;
 
 @end
 
@@ -59,38 +61,40 @@
 {
     [super viewDidLoad];
     
-    [self configData];
+    self.count = 0;
     [self layoutUI];
+    [self configData];
+
 }
 
 - (void)layoutUI
 {
     self.mazeKits = [NSMutableArray array];
     
-    CGFloat regularLenght = SCREEN_WIDTH/_maze.count;
+    CGFloat regularLenght = SCREEN_WIDTH/self.maze.count;
     
-    for (int i=0 ;i<_maze.count;i++) {
-        for (int j=0;j<[_maze[i] count];j++) {
+    for (int i=0 ;i<self.maze.count;i++) {
+        for (int j=0;j<[self.maze[i] count];j++) {
             
             MazeNodeKit *mazeNode = [[MazeNodeKit alloc]init];
             mazeNode.position.xValue = i;
             mazeNode.position.yValue = j;
-            mazeNode.displayValue = _maze[i][j];
+            mazeNode.displayValue = self.maze[i][j];
             
             
-            if ([_maze[i][j] integerValue]== 0) {
+            if ([self.maze[i][j] integerValue]== 0) {
                 mazeNode.backgroundColor = [UIColor lightGrayColor];
             }
             
-            if ([_maze[i][j] integerValue]== 1) {
+            if ([self.maze[i][j] integerValue]== 1) {
                 mazeNode.backgroundColor = [UIColor whiteColor];
             }
             
-            if ([_maze[i][j] integerValue]== 2) {
+            if ([self.maze[i][j] integerValue]== 2) {
                 mazeNode.backgroundColor = [UIColor greenColor];
             }
             
-            if ([_maze[i][j] integerValue]== 3) {
+            if ([self.maze[i][j] integerValue]== 3) {
                 mazeNode.backgroundColor = [UIColor redColor];
             }
             
@@ -104,19 +108,43 @@
 
 - (IBAction)start:(UIButton *)sender
 {
-    NSLog(@"situations is %@",self.situations);
+    [self layoutUI];
+    [self changeBackGroundColor:self.situations[_count]];
+    _count++;
+    self.startBtn.enabled = NO;
+    self.clearBtn.enabled = NO;
     
-    for (NSArray *array in self.situations)
+    if (_count != self.situations.count)
     {
-        for (MazeNodeKit *node in array) {
+        [self loopAction];
+    } else {
+        self.clearBtn.enabled = YES;
+    }
+}
+
+- (IBAction)clearLayout:(UIButton *)sender
+{
+    [self layoutUI];
+    self.count = 0;
+    self.startBtn.enabled = YES;
+    self.clearBtn.enabled = NO;
+}
+
+- (void)loopAction
+{
+    [self performSelector:@selector(start:) withObject:nil afterDelay:0.1];
+}
+
+- (void)changeBackGroundColor :(NSArray *)array
+{
+    for (MazeNodeKit *node in array) {
+        
+        for (MazeNodeKit *node1 in self.mazeKits) {
             
-            for (MazeNodeKit *node1 in self.mazeKits) {
+            if (node.position.xValue == node1.position.xValue && node.position.yValue == node1.position.yValue) {
                 
-                if (node.position.xValue == node1.position.xValue && node.position.yValue == node1.position.yValue) {
-                    
-                    node1.backgroundColor = [UIColor blueColor];
-                    NSLog(@"node1 position is x = %ld, y = %ld",(long)node1.position.xValue,(long)node1.position.yValue);
-                }
+                node1.backgroundColor = [UIColor blueColor];
+                NSLog(@"node1 position is x = %ld, y = %ld",(long)node1.position.xValue,(long)node1.position.yValue);
             }
         }
     }
@@ -124,7 +152,6 @@
 
 - (void)configData
 {
-    
     NSMutableArray *stack = [NSMutableArray array];
     MazeNodeKit *start = [[MazeNodeKit alloc]init];
     start.position.xValue = 1;
@@ -148,31 +175,44 @@
 - (NSArray *)findMazeExit :(NSMutableArray *)stack
 {
     NSMutableArray *container = [NSMutableArray array];
+    NSMutableArray *invalidSteps = [NSMutableArray array];
+    NSMutableArray *hasBeenStepped = [NSMutableArray array];
     
     do {
         
         MazeNodeKit *mazeNode = stack.lastObject;
         
-        if ([self accessAble:mazeNode]) {
+        if ([self accessAble:mazeNode]&&![self isValid:mazeNode invalidStack:invalidSteps]) {
+      
+           [hasBeenStepped addObject:mazeNode];
+            
+            NSMutableArray *stackCopy = [stack mutableCopy];
+            
+            [container addObject:stackCopy];
             
             MazeNodeKit *nextStep = [[MazeNodeKit alloc]init];
             
             nextStep.position.xValue = mazeNode.position.xValue;
             nextStep.position.yValue = mazeNode.position.yValue;
             nextStep.currentStep = mazeNode.currentStep+=1;
-            nextStep = [self swithPosition:nextStep];
-            [stack addObject:nextStep];
             
-            [container addObject:stack];
+            nextStep = [self swithPosition:nextStep];
+            
+            [stack addObject:nextStep];
             
         } else {
             
+            [invalidSteps addObject:stack.lastObject];
+            
             [stack removeLastObject];
+            
             mazeNode = stack.lastObject;
      
             if (mazeNode.changeDirectionCount > 4 && stack.count>0) {
                 
+                [invalidSteps addObject:stack.lastObject];
                 [stack removeLastObject];
+                mazeNode = stack.lastObject;
             }
             
             mazeNode.changeDirectionCount += 1;
@@ -245,6 +285,29 @@
         return YES;
     }
 }
+
+- (BOOL)isValid: (MazeNodeKit *)node invalidStack :(NSMutableArray *)invalidStacks
+{
+    for (MazeNodeKit *node1 in invalidStacks) {
+        
+        if (node1.position.xValue == node.position.xValue && node.position.yValue == node.position.yValue) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)isRepeatOne: (MazeNodeKit *)node stepped :(NSMutableArray *)array
+{
+    for (MazeNodeKit *node1 in array) {
+        
+        if (node1.position.xValue == node.position.xValue && node.position.yValue == node.position.yValue) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 - (NSNumber *)nodeValue :(MazeNodeKit *)node
 {
